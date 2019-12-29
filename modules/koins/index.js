@@ -1,6 +1,12 @@
 const { sendEmbed, getCommand, getMentionedUser } = require('../../helpers');
 const { Users } = require('../../database/models/users');
 
+const commands =
+{
+  koins: 'koins',
+  k: 'k',
+};
+
 class Koins
 {
   /** @param {import('discord.js').Message} message */
@@ -8,14 +14,14 @@ class Koins
   {
     this.message = message;
 
-    const command = getCommand(message);
+    const command = getCommand(message, commands);
     if(!command)
       return;
 
     switch(command)
     {
-      case 'koins':
-      case 'k':
+      case commands.koins:
+      case commands.k:
         this.koins();
         break;
     }

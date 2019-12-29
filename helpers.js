@@ -22,15 +22,25 @@ exports.sendEmbed = (message, options) =>
  * @description Gets the command from the message.
  * 
  * @param {import('discord.js').Message} message 
+ * @param {object} commands
  * */
-exports.getCommand = message =>
+exports.getCommand = (message, commands) =>
 {
+  commands = Object.values(commands);
+  if(!Array.isArray(commands))
+    return;
+
   let { content } = message;
   if(!content.startsWith(prefix))
     return;
 
   content = content.substr(prefix.length);
-  return content.split(' ').shift();
+  const command = content.split(' ').shift();
+
+  if(!commands.includes(command))
+    return;
+
+  return command;
 }
 
 /**

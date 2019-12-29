@@ -7,6 +7,11 @@ const
 } = require('../../helpers');
 const config = require('../../config');
 
+const commands =
+{
+  addmod: 'addmod',
+};
+
 class Dev
 {
   /** @param {import('discord.js').Message} message */
@@ -14,7 +19,7 @@ class Dev
   {
     this.message = message;
 
-    const command = getCommand(message);
+    const command = getCommand(message, commands);
     if(!command)
       return;
 
@@ -24,7 +29,7 @@ class Dev
 
     switch(command)
     {
-      case 'addmod':
+      case commands.addmod:
         this.addMod();
         break;
     }

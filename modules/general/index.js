@@ -1,6 +1,12 @@
 const { sendEmbed, getCommand } = require('../../helpers');
 const { readFileSync } = require('fs');
 
+const commands =
+{
+  ping: 'ping',
+  help: 'help'
+};
+
 class General
 {
   /** @param {import('discord.js').Message} message */
@@ -8,17 +14,17 @@ class General
   {
     this.message = message;
 
-    const command = getCommand(message);
+    const command = getCommand(message, commands);
     if(!command)
       return;
 
     switch(command)
     {
-      case 'ping':
+      case commands.ping:
         this.ping();
         break;
 
-      case 'help':
+      case commands.help:
         this.help();
         break;
     }
@@ -32,7 +38,7 @@ class General
 
   // Shows the help message.
   help()
-  {;
+  {
     const description = readFileSync(`${__dirname}/help`).toString();
     sendEmbed(this.message, { description });
   }
