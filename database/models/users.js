@@ -12,6 +12,9 @@ class Users extends Model
       }
     );
 
+    if(!user)
+      return;
+
     return user.koins;
   }
 
