@@ -24,11 +24,13 @@ class General
     }
   }
 
+  // Shows the ping of the bot.
   ping()
   {
     sendEmbed(this.message, { title: `📶  ${~~(this.message.client.ping)} ms` });
   }
 
+  // Shows the help message.
   help()
   {;
     const description = readFileSync(`${__dirname}/help`).toString();
