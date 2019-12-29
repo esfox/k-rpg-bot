@@ -61,3 +61,12 @@ exports.getMentionedUser = message =>
 
   return user;
 }
+
+/**
+ * @description Save a new config.
+ */
+exports.saveConfig = newConfig =>
+{
+  config = 'module.exports =\n' + JSON.stringify(config, null, 2);
+  console.log(config);
+}
