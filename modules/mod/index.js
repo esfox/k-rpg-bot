@@ -9,6 +9,11 @@ const { mod_roles } = require('../../config');
 
 const { Users } = require('../../database/models/users');
 
+const commands =
+{
+  addkoins: 'addkoins',
+};
+
 class Mod
 {
   /** @param {import('discord.js').Message} message */
@@ -16,7 +21,7 @@ class Mod
   {
     this.message = message;
 
-    const command = getCommand(message);
+    const command = getCommand(message, commands);
     if(!command)
       return;
 
@@ -26,7 +31,7 @@ class Mod
 
     switch(command)
     {
-      case 'addkoins':
+      case commands.addkoins:
         this.addKoins();
         break;
     }
