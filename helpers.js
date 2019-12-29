@@ -1,5 +1,6 @@
 const { RichEmbed } = require('discord.js');
-const { prefix, embed_color } = require('./config');
+const config = require('./config');
+const fs = require('fs');
 
 /** 
  * @description Sends an embed in the channel the message was sent in.
@@ -10,7 +11,7 @@ const { prefix, embed_color } = require('./config');
 exports.sendEmbed = (message, options) =>
 {
   const embed = new RichEmbed(options)
-    .setColor(embed_color);
+    .setColor(config.embed_color);
 
   if(options.reply)
     return message.reply(embed);
@@ -31,10 +32,10 @@ exports.getCommand = (message, commands) =>
     return;
 
   let { content } = message;
-  if(!content.startsWith(prefix))
+  if(!content.startsWith(config.prefix))
     return;
 
-  content = content.substr(prefix.length);
+  content = content.substr(config.prefix.length);
   const command = content.split(' ').shift();
 
   if(!commands.includes(command))
@@ -76,7 +77,5 @@ exports.getMentionedUser = message =>
  * @description Save a new config.
  */
 exports.saveConfig = newConfig =>
-{
-  config = 'module.exports =\n' + JSON.stringify(config, null, 2);
-  console.log(config);
-}
+  fs.writeFileSync('./config.js',
+    'module.exports =\n' + JSON.stringify(newConfig, null, 2));

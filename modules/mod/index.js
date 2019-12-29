@@ -5,8 +5,7 @@ const
   getParams,
   getMentionedUser,
 } = require('../../helpers');
-const { mod_roles } = require('../../config');
-
+const config = require('../../config');
 const { Users } = require('../../database/models/users');
 
 const commands =
@@ -25,7 +24,7 @@ class Mod
     if(!command)
       return;
 
-    if(!mod_roles.every(role => message.member.roles.get(role)))
+    if(config.mod_roles.every(role => !message.member.roles.get(role)))
       return sendEmbed(message,
         { title: '❌  You are not allowed to use this command.' });
 

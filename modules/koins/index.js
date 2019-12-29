@@ -37,7 +37,7 @@ class Koins
       
     sendEmbed(this.message,
     {
-      title: `💰  Koins: ${koins}`,
+      title: `💰  Koins: ${koins || 0}`,
       author: !user? undefined :
       {
         name: user.username,
