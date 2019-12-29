@@ -1,0 +1,7 @@
+**Bot Commands**
+
+`;koins` / `;k` = check your current koins
+`;koins (@user/user ID)` / `;k (@user/user ID)` =  check a user's current koins
+
+`;ping` = check the bot's ping
+`;help` = show this message

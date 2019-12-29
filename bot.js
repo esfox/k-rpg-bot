@@ -3,6 +3,7 @@ const bot = new Discord.Client();
 
 const { Koins } = require('./modules/koins');
 const { Mod } = require('./modules/mod');
+const { General } = require('./modules/general');
 
 const [ token ] = process.argv.slice(2);
 bot
@@ -16,6 +17,10 @@ bot.on('ready', () =>
 
 bot.on('message', message =>
 {
+  if(message.author.bot)
+    return;
+
+  new General(message);
   new Koins(message);
   new Mod(message);
 });
