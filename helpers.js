@@ -73,9 +73,7 @@ exports.getMentionedUser = message =>
   return user;
 }
 
-/**
- * @description Save a new config.
- */
+/** @description Save a new config. */
 exports.saveConfig = newConfig =>
   fs.writeFileSync('./config.js',
     'module.exports =\n' + JSON.stringify(newConfig, null, 2));

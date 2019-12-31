@@ -1,3 +1,5 @@
+const { readFileSync, writeFileSync } = require('fs');
+
 const
 {
   sendEmbed,
@@ -11,7 +13,11 @@ const { Users } = require('../../database/models/users');
 const commands =
 {
   addkoins: 'addkoins',
+  addkuild: 'addkuild',
+  removekuild: 'removekuild',
 };
+
+const kuildsFile = config.kuilds_path;
 
 class Mod
 {
@@ -32,6 +38,14 @@ class Mod
     {
       case commands.addkoins:
         this.addKoins();
+        break;
+
+      case commands.addkuild:
+        this.saveKuild();
+        break;
+      
+      case commands.removekuild:
+        this.saveKuild(true);
         break;
     }
   }
@@ -58,6 +72,34 @@ class Mod
 
     sendEmbed(this.message,
       { description: `💰  Added ${amount} koins to <@${user}>.` });
+  }
+
+  saveKuild(toRemove)
+  {
+    const kuildRole = this.message.mentions.roles.first();
+    if(!kuildRole)
+      return sendEmbed(this.message,
+        { title: '❌  Please mention the role of the kuild.' });
+
+    const kuild = kuildRole.id;
+    const kuildsJSON = readFileSync(kuildsFile).toString();
+  
+    /** @type {string[]} */
+    let kuilds = JSON.parse(kuildsJSON);
+  
+    if(toRemove)
+    {
+      if(kuilds.includes(kuild))
+        kuilds = kuilds.filter(id => id !== kuild);
+    }
+    else
+      kuilds.push(kuild);
+  
+    writeFileSync(kuildsFile, JSON.stringify(kuilds, null, 2));
+    sendEmbed(this.message, { description:
+        !toRemove?
+          `✅  Successfully added <@&${kuild}> to kuilds.` :
+          `⛔  Successfully removed <@&${kuild}> from kuilds.` });
   }
 }
 

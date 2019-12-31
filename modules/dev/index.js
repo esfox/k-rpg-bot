@@ -5,6 +5,7 @@ const
   getParams,
   saveConfig,
 } = require('../../helpers');
+
 const config = require('../../config');
 
 const commands =
@@ -47,6 +48,10 @@ class Dev
     if(!this.message.guild.roles.get(role))
       return sendEmbed(this.message,
         { title: '❌  That is not a valid role ID.' });
+
+    if(config.mod_roles.includes(role))
+      return sendEmbed(this.message,
+        { title: 'That role already has moderator permissions.' });
 
     config.mod_roles.push(role);
     saveConfig(config);

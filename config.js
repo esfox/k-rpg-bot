@@ -4,7 +4,8 @@ module.exports =
   "prefix": ";",
   "embed_color": "#43ff00",
   "mod_roles": [
-    "660681560386961420",
-    "659312496271687680"
-  ]
+    "659312496271687680",
+    "660681560386961420"
+  ],
+  "kuilds_path": "./modules/kuilds/kuilds.json",
 }
