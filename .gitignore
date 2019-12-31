@@ -71,3 +71,6 @@ start.sh
 
 # unnecessary folders
 others
+
+# config file
+config.js
