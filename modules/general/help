@@ -3,5 +3,8 @@
 `;koins` / `;k` = check your current koins
 `;koins (@user/user ID)` / `;k (@user/user ID)` =  check a user's current koins
 
+`;kuilds` = shows the list of current kuilds
+`;members (@kuild-role)` = shows the members of the mentioned kuild
+
 `;ping` = check the bot's ping
 `;help` = show this message
