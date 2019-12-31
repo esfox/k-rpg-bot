@@ -40,9 +40,12 @@ class Kuilds
 
   kuilds()
   {
-    const kuilds = getKuilds()
+    let kuilds = getKuilds()
       .map(kuild => this.message.guild.roles.get(kuild))
       .join('\n');
+
+    if(kuilds.length === 0)
+      kuilds = 'No kuilds yet.';
 
     sendEmbed(this.message,
       {
@@ -55,7 +58,7 @@ class Kuilds
             value: 'Message or mention any member'
               + ' of that kuild and ask to join.\n'
               + 'To check the members of that kuild, check the members list'
-              + ' or do `;members @kuild-role.',
+              + ' or do `;members @kuild-role.`',
           }
         ]
       });

@@ -72,5 +72,6 @@ start.sh
 # unnecessary folders
 others
 
-# config file
+# config or data files
 config.js
+modules/kuilds/kuilds.json
