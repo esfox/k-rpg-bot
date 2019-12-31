@@ -6,5 +6,6 @@ module.exports =
   "mod_roles": [
     "659312496271687680",
     "660681560386961420"
-  ]
+  ],
+  "kuilds_path": "./modules/kuilds/kuilds.json",
 }

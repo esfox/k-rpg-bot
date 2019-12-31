@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Op } = require('sequelize');
 const { modelOptions } = require('..');
 
 class Users extends Model
@@ -38,6 +38,22 @@ class Users extends Model
 
     const koins = user.koins + parseInt(amount);
     return Users.update({ koins }, whereDiscordID);
+  }
+
+  static async getAll()
+  {
+    const users = await Users.findAll(
+    {
+      attributes: [ 'discord_id', 'koins' ],
+      where: { koins: { [Op.not]: 0 } },
+      order: [ [ 'koins', 'DESC' ] ],
+    });
+
+    return users.map(user =>
+    ({
+      user: user.discord_id,
+      koins: user.koins
+    }));
   }
 }
 

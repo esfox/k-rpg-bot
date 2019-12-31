@@ -5,6 +5,7 @@ const { Dev } = require('./modules/dev');
 const { Mod } = require('./modules/mod');
 const { Koins } = require('./modules/koins');
 const { General } = require('./modules/general');
+const { Kuilds } = require('./modules/kuilds');
 
 const [ token ] = process.argv.slice(2);
 bot
@@ -25,4 +26,5 @@ bot.on('message', message =>
   new Mod(message);
   new General(message);
   new Koins(message);
+  new Kuilds(message);
 });
