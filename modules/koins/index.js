@@ -68,7 +68,7 @@ class Koins
           + `${koins.toLocaleString()}\n`, '');
 
     const leaderboard = `💰 **Koins Leaderboard**`
-      + '```css\n' + koins  + '```';
+      + '```css\n' + koins  + ' ```';
     this.message.channel.send(leaderboard);
   }
 }

@@ -7,11 +7,13 @@ const
 } = require('../../helpers');
 
 const config = require('../../config');
+const { Users } = require('../../database/models/users');
 
 const commands =
 {
   addmod: 'addmod',
   removemod: 'removemod',
+  reset: 'reset',
 };
 
 class Dev
@@ -37,6 +39,10 @@ class Dev
 
       case commands.removemod: 
         this.removeMod();
+        break;
+
+      case commands.reset:
+        this.resetKoins();
         break;
     }
   }
@@ -71,6 +77,12 @@ class Dev
     saveConfig(config);
     sendEmbed(this.message,
       { description: `⛔  Removed moderator permissions to <@&${role}>.` });
+  }
+
+  async resetKoins()
+  {
+    await Users.reset();
+    sendEmbed(this.message, { title: '❕  Koins has been reset.' });
   }
 }
 

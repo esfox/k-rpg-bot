@@ -55,6 +55,11 @@ class Users extends Model
       koins: user.koins
     }));
   }
+
+  static async reset()
+  {
+    return Users.sequelize.query('delete from users');
+  }
 }
 
 Users.init(
