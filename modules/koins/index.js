@@ -1,5 +1,6 @@
 const { sendEmbed, getCommand, getMentionedUser } = require('../../helpers');
 const { Users } = require('../../database/models/users');
+const config = require('../../config');
 
 const commands =
 {
@@ -60,6 +61,9 @@ class Koins
     let koins = await Users.getAll();
     koins = koins
       .filter(({ user }) => this.message.guild.member(user))
+      .filter(({ user }) =>
+        !config.mod_roles.every(role =>
+          this.message.guild.member(user).roles.get(role))
       .slice(0, 10)
       .reduce((table, { user, koins }, i) =>
         table + `#${i + 1}`.padEnd(5, ' ')
