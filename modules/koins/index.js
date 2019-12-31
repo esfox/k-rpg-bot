@@ -62,8 +62,8 @@ class Koins
     koins = koins
       .filter(({ user }) => this.message.guild.member(user))
       .filter(({ user }) =>
-        !config.mod_roles.every(role =>
-          this.message.guild.member(user).roles.get(role)))
+        this.message.guild.member(user).roles.every(role =>
+          !config.mod_roles.includes(role.id)))
       .slice(0, 10)
       .reduce((table, { user, koins }, i) =>
         table + `#${i + 1}`.padEnd(5, ' ')
