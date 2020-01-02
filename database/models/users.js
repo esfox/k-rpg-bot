@@ -3,6 +3,22 @@ const { modelOptions } = require('..');
 
 class Users extends Model
 {
+  static async getAll()
+  {
+    const users = await Users.findAll(
+    {
+      attributes: [ 'discord_id', 'koins' ],
+      where: { koins: { [Op.not]: 0 } },
+      order: [ [ 'koins', 'DESC' ] ],
+    });
+
+    return users.map(user =>
+    ({
+      user: user.discord_id,
+      koins: user.koins
+    }));
+  }
+
   static async getUserKoins(discord_id)
   {
     const user = await Users.findOne(
@@ -40,20 +56,35 @@ class Users extends Model
     return Users.update({ koins }, whereDiscordID);
   }
 
-  static async getAll()
+  /** @param {[]} users */
+  static async batchAddKoins(users, amount)
   {
-    const users = await Users.findAll(
-    {
-      attributes: [ 'discord_id', 'koins' ],
-      where: { koins: { [Op.not]: 0 } },
-      order: [ [ 'koins', 'DESC' ] ],
-    });
+    amount = parseInt(amount);
 
-    return users.map(user =>
-    ({
-      user: user.discord_id,
-      koins: user.koins
-    }));
+    let userKoins = await Users.findAll(
+      {
+        attributes: [ 'discord_id', 'koins' ],
+        where: { discord_id: { [Op.in]: users } },
+      }
+    ).reduce((data, { discord_id, koins }) =>
+    {
+      data[discord_id] = koins;
+      return data;
+    }, {});
+
+    for(const discord_id of users)
+    {
+      if(!userKoins[discord_id])
+      {
+        Users.create({ discord_id, koins: amount });
+        continue;
+      }
+      
+      Users.update(
+        { koins: userKoins[discord_id] + amount },
+        { where: { discord_id } }
+      );
+    }
   }
 
   static async reset()

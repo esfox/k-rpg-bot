@@ -55,23 +55,35 @@ class Mod
   {
     const [ , amount ] = getParams(this.message);
 
+    if(!amount)
+      return sendEmbed(this.message,
+        { title: '❌  Please include how much koins to add.' });
+
+    const kuild = this.message.mentions.roles.first();
+    if(kuild)
+    {
+      const members = kuild.members
+        .filter(member => kuild.guild.member(member.id))
+        .map(({ id }) => id);
+
+      Users.batchAddKoins(members, amount);
+      return sendEmbed(this.message,
+        { description: `💰  Added **${amount} koins** to all members of`
+          + ` ${kuild}.` });
+    }
+
     let user = getMentionedUser(this.message);
     if(!user)
       return sendEmbed(this.message,
         { title: '❌  Please mention the user to add koins to.' });
-
-    if(!amount)
-      return sendEmbed(this.message,
-        { title: '❌  Please include how much koins to add.' });
     
-    user = user.id;
-    const result = await Users.addUserKoins(user, amount);
+    const result = await Users.addUserKoins(user.id, amount);
     if(!result)
       return sendEmbed(this.message,
         { title: '❌  An error occurred. Please try again.' });
 
     sendEmbed(this.message,
-      { description: `💰  Added ${amount} koins to <@${user}>.` });
+      { description: `💰  Added **${amount} koins** to ${user}.` });
   }
 
   saveKuild(toRemove)
